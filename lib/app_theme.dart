@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
 class AppTheme {
-  static const primaryBlue = Color(0xFF1DA1F2);
-  static const secondaryBlue = Color(0xFFEDF8FF);
+  static const blueDark = Color(0xFF1DA1F2);
+  static const blueLight = Color(0xFFEDF8FF);
   static const scaffoldBackgroundColor = Color(0xFFFFFFFF);
-  static const grey = Color(0xFFF2F2F2);
+  static const greyLight = Color(0xFFF2F2F2);
+  static const greyMedium = Color(0xFFE5E5E5);
+  static const greyDark = Color(0xFF949C9E);
+  static const lightBlack = Color(0xFF323238);
 
   static const headingLarge = TextStyle(
     fontFamily: 'Roboto',
