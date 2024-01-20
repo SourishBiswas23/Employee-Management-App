@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 import '../../app_theme.dart';
 import '../../common/format_date_string.dart';
 import '../../controllers/bloc/employee_bloc/employee_bloc.dart';
 import '../../routes.dart';
+import 'dismissible_list_tile.dart';
 
 class EmployeeListScreen extends StatefulWidget {
   const EmployeeListScreen({super.key});
@@ -66,58 +66,12 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
                       dateString: state.allEmployees[index].dateOfLeaving,
                     );
 
-                    return Dismissible(
-                      background: Container(
-                        alignment: Alignment.centerRight,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 40,
-                        ),
-                        color: AppTheme.red,
-                        child: SvgPicture.asset(
-                          'assets/images/delete_icon.svg',
-                          height: 24,
-                          width: 24,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      direction: DismissDirection.endToStart,
-                      key: ValueKey<int>(employeeKeys[index]),
-                      child: Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.all(16),
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          border: Border(
-                            bottom: BorderSide(
-                              width: 1,
-                              color: AppTheme.greyLight,
-                            ),
-                          ),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              name,
-                              style: AppTheme.headingMedium.copyWith(
-                                color: AppTheme.lightBlack,
-                              ),
-                            ),
-                            const SizedBox(height: 6),
-                            Text(
-                              position,
-                              style: AppTheme.bodyMedium.copyWith(
-                                color: AppTheme.greyDark,
-                              ),
-                            ),
-                            const SizedBox(height: 6),
-                            Text(
-                              '$joiningDate ${leavingDate.isEmpty ? '' : ' - $leavingDate'}',
-                            )
-                          ],
-                        ),
-                      ),
+                    return DismissibleListTile(
+                      employeeKey: employeeKeys[index],
+                      name: name,
+                      position: position,
+                      joiningDate: joiningDate,
+                      leavingDate: leavingDate,
                     );
                   },
                 ),

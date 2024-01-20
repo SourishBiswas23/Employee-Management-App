@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'controllers/bloc/employee_bloc/employee_bloc.dart';
 import 'routes.dart';
 import 'controllers/repository/database_service.dart';
-import 'views/add_employee_details_screen/add_employee_details_screen.dart';
 
 void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
