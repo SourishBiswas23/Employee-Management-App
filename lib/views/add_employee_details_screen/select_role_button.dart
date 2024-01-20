@@ -5,13 +5,16 @@ import '../../app_theme.dart';
 class SelectRoleButton extends StatefulWidget {
   const SelectRoleButton({
     super.key,
+    required this.selectedRoleController,
   });
+  final TextEditingController selectedRoleController;
 
   @override
   State<SelectRoleButton> createState() => _SelectRoleButtonState();
 }
 
 class _SelectRoleButtonState extends State<SelectRoleButton> {
+  
   List<String> availableRoles = [
     'Product Designer',
     'Flutter Developer',
@@ -37,6 +40,7 @@ class _SelectRoleButtonState extends State<SelectRoleButton> {
                     Navigator.pop(context);
                     setState(() {
                       selectedRole = role;
+                      widget.selectedRoleController.text = role;
                     });
                   },
                   child: Container(

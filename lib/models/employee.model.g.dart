@@ -19,8 +19,8 @@ class EmployeeModelAdapter extends TypeAdapter<EmployeeModel> {
     return EmployeeModel(
       name: fields[0] as String,
       position: fields[1] as String,
-      dateOfJoining: fields[2] as DateTime,
-      dateOfLeaving: fields[3] as DateTime?,
+      dateOfJoining: fields[2] as String,
+      dateOfLeaving: fields[3] as String,
     );
   }
 

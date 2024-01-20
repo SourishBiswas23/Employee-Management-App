@@ -15,7 +15,35 @@ class AddEmployeeDetailsScreen extends StatefulWidget {
 }
 
 class _AddEmployeeDetailsScreenState extends State<AddEmployeeDetailsScreen> {
-  late final GlobalKey<FormState> formKey = GlobalKey();
+
+  late final TextEditingController employeeNameController;
+  late final TextEditingController selectedRoleController;
+  late final TextEditingController startDateController;
+  late final TextEditingController endDateController;
+
+  @override
+  void initState() {
+    employeeNameController = TextEditingController();
+    selectedRoleController = TextEditingController();
+    startDateController = TextEditingController();
+    endDateController = TextEditingController();
+
+    employeeNameController.text = '';
+    selectedRoleController.text = '';
+    startDateController.text = '';
+    endDateController.text = '';
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    employeeNameController.dispose();
+    selectedRoleController.dispose();
+    startDateController.dispose();
+    endDateController.dispose();
+    super.dispose();
+  }
   
 
   @override
@@ -35,20 +63,29 @@ class _AddEmployeeDetailsScreenState extends State<AddEmployeeDetailsScreen> {
           right: 16,
           top: 20,
         ),
-        child: Form(
-          key: formKey,
-          child: const Column(
-            children: [
-              EmployeeNameTextField(),
-              SizedBox(height: 23),
-              SelectRoleButton(),
-              SizedBox(height: 23),
-              StartAndEndDate(),
-              Spacer(),
-              Divider(color: AppTheme.greyLight),
-              CancelAndSaveButtons()
-            ],
-          ),
+        child: Column(
+          children: [
+            EmployeeNameTextField(
+              employeeNameController: employeeNameController,
+            ),
+            const SizedBox(height: 23),
+            SelectRoleButton(
+              selectedRoleController: selectedRoleController,
+            ),
+            const SizedBox(height: 23),
+            StartAndEndDate(
+              endDateController: endDateController,
+              startDateController: startDateController,
+            ),
+            const Spacer(),
+            const Divider(color: AppTheme.greyLight),
+            CancelAndSaveButtons(
+              employeeNameController: employeeNameController,
+              endDateController: endDateController,
+              selectedRoleController: selectedRoleController,
+              startDateController: startDateController,
+            ),
+          ],
         ),
       ),
     );

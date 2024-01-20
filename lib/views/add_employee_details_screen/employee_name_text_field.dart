@@ -5,7 +5,9 @@ import '../../app_theme.dart';
 class EmployeeNameTextField extends StatelessWidget {
   const EmployeeNameTextField({
     super.key,
+    required this.employeeNameController,
   });
+  final TextEditingController employeeNameController;
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +20,7 @@ class EmployeeNameTextField extends StatelessWidget {
     );
 
     return TextField(
+      controller: employeeNameController,
       cursorColor: AppTheme.blueDark,
       decoration: InputDecoration(
         hintText: 'Employee Name',

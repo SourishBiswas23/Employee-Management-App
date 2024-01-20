@@ -7,6 +7,7 @@ class DatabaseService {
 
   static Future<void> initialize() async {
     await Hive.initFlutter();
+    Hive.registerAdapter(EmployeeModelAdapter());
     _employeeBox = await Hive.openBox<EmployeeModel>('employeeBox');
   }
 

@@ -14,8 +14,8 @@ class EmployeeModel {
   EmployeeModel copyWith({
     String? name,
     String? position,
-    DateTime? dateOfJoining,
-    DateTime? dateOfLeaving,
+    String? dateOfJoining,
+    String? dateOfLeaving,
   }) {
     return EmployeeModel(
       name: name ?? this.name,
@@ -30,7 +30,7 @@ class EmployeeModel {
   @HiveField(1)
   final String position;
   @HiveField(2)
-  final DateTime dateOfJoining;
+  final String dateOfJoining;
   @HiveField(3)
-  final DateTime? dateOfLeaving;
+  final String dateOfLeaving;
 }

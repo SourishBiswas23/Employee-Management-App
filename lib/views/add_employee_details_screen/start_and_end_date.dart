@@ -5,7 +5,13 @@ import 'package:intl/intl.dart';
 import '../../app_theme.dart';
 
 class StartAndEndDate extends StatefulWidget {
-  const StartAndEndDate({super.key});
+  const StartAndEndDate({
+    super.key,
+    required this.startDateController,
+    required this.endDateController,
+  });
+  final TextEditingController startDateController;
+  final TextEditingController endDateController;
 
   @override
   State<StartAndEndDate> createState() => _StartAndEndDateState();
@@ -32,6 +38,7 @@ class _StartAndEndDateState extends State<StartAndEndDate> {
               if (date != null) {
                 setState(() {
                   startDate = date;
+                  widget.startDateController.text = date.toString();
                 });
               }
             },
@@ -91,6 +98,7 @@ class _StartAndEndDateState extends State<StartAndEndDate> {
               if (date != null) {
                 setState(() {
                   endDate = date;
+                  widget.endDateController.text = date.toString();
                 });
               }
             },

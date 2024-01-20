@@ -57,6 +57,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
       }
       if (!error) {
         _employeeProvider.saveEmployee(employee: event.employee);
+        displaySnackbar(message: 'Employee Saved', showUndoButton: false);
       }
     });
   }
