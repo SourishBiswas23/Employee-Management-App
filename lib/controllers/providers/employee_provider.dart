@@ -12,11 +12,11 @@ class EmployeeProvider extends ChangeNotifier {
     _employees = DatabaseService.getAllEmployees();
   }
 
-  Future<void> editEmployee({
+  Future<void> updateEmployee({
     required EmployeeModel oldEmployee,
     required EmployeeModel updatedEmployee,
   }) async {
-    await DatabaseService.modifyEmployee(
+    await DatabaseService.updateEmployee(
       updatedEmployee: updatedEmployee,
       oldEmployee: oldEmployee,
     );
@@ -24,6 +24,10 @@ class EmployeeProvider extends ChangeNotifier {
 
   Future<void> saveEmployee({required EmployeeModel employee}) async {
     await DatabaseService.saveEmployee(employee: employee);
+  }
+
+  Future<void> deleteEmployee({required EmployeeModel employee}) async {
+    await DatabaseService.deleteEmployee(employee: employee);
   }
 
   @override

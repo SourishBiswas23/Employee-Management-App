@@ -19,7 +19,7 @@ class DatabaseService {
     await _employeeBox.put(key, employee);
   }
 
-  static Future<void> modifyEmployee({
+  static Future<void> updateEmployee({
     required EmployeeModel updatedEmployee,
     required EmployeeModel oldEmployee,
   }) async {
