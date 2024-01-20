@@ -1,10 +1,11 @@
+import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 
 part 'employee.model.g.dart';
 
 @HiveType(typeId: 0)
-class EmployeeModel {
-  EmployeeModel({
+class EmployeeModel extends Equatable {
+  const EmployeeModel({
     required this.name,
     required this.position,
     required this.dateOfJoining,
@@ -33,4 +34,12 @@ class EmployeeModel {
   final String dateOfJoining;
   @HiveField(3)
   final String dateOfLeaving;
+  
+  @override
+  List<Object?> get props => [
+        name,
+        position,
+        dateOfJoining,
+        dateOfLeaving,
+      ];
 }

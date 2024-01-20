@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 import '../../app_theme.dart';
-import '../../common/format_date_string.dart';
+import '../../common/generate_key.dart';
 import '../../controllers/bloc/employee_bloc/employee_bloc.dart';
 import '../../routes.dart';
 import 'dismissible_list_tile.dart';
@@ -16,15 +16,10 @@ class EmployeeListScreen extends StatefulWidget {
 }
 
 class _EmployeeListScreenState extends State<EmployeeListScreen> {
-  late List<int> employeeKeys;
 
   @override
   void initState() {
     context.read<EmployeeBloc>().add(LoadEmployeesEvent());
-    employeeKeys = List<int>.generate(
-      context.read<EmployeeBloc>().state.allEmployees.length,
-      (index) => index,
-    );
     initializeDateFormatting();
     super.initState();
   }
@@ -33,10 +28,6 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<EmployeeBloc, EmployeeState>(
       builder: (context, state) {
-        employeeKeys = List<int>.generate(
-          context.read<EmployeeBloc>().state.allEmployees.length,
-          (index) => index,
-        );
         return Scaffold(
           backgroundColor: AppTheme.greyLight,
           appBar: AppBar(
@@ -57,21 +48,13 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
               : ListView.builder(
                   itemCount: state.allEmployees.length,
                   itemBuilder: (context, index) {
-                    final String name = state.allEmployees[index].name;
-                    final String position = state.allEmployees[index].position;
-                    final String joiningDate = formatDateString(
-                      dateString: state.allEmployees[index].dateOfJoining,
-                    );
-                    final String leavingDate = formatDateString(
-                      dateString: state.allEmployees[index].dateOfLeaving,
-                    );
-
                     return DismissibleListTile(
-                      employeeKey: employeeKeys[index],
-                      name: name,
-                      position: position,
-                      joiningDate: joiningDate,
-                      leavingDate: leavingDate,
+                      key: ValueKey<String>(
+                        generateKey(
+                          employee: state.allEmployees[index],
+                        ),
+                      ),
+                      employee: state.allEmployees[index],
                     );
                   },
                 ),

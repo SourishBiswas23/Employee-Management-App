@@ -19,18 +19,24 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
     });
     on<DeleteEmployeeEvent>(
       (event, emit) async {
-        _employeeProvider.deleteEmployee(employee: event.employee);
+        await _employeeProvider.deleteEmployee(employee: event.employee);
         displaySnackbar(
           message: 'Employee data has been deleted',
           showUndoButton: true,
         );
         deletedEmployee = event.employee;
+        await _employeeProvider.loadEmployees();
+        final allEmployees = _employeeProvider.employees;
+        emit(AllEmployeesState(allEmployees: allEmployees));
       },
     );
     on<UndoEmployeeDeletionEvent>((event, emit) async {
       if (deletedEmployee != null) {
         await _employeeProvider.saveEmployee(employee: deletedEmployee!);
         deletedEmployee = null;
+        await _employeeProvider.loadEmployees();
+        final allEmployees = _employeeProvider.employees;
+        emit(AllEmployeesState(allEmployees: allEmployees));
       }
     });
     on<UpdateEmployeeEvent>(
@@ -39,6 +45,9 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
           oldEmployee: event.oldEmployee,
           updatedEmployee: event.updatedEmployee,
         );
+        await _employeeProvider.loadEmployees();
+        final allEmployees = _employeeProvider.employees;
+        emit(AllEmployeesState(allEmployees: allEmployees));
       },
     );
     on<CreateEmployeeEvent>((event, emit) async {
@@ -63,7 +72,10 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
         error = true;
       }
       if (!error) {
-        _employeeProvider.saveEmployee(employee: event.employee);
+        await _employeeProvider.saveEmployee(employee: event.employee);
+        await _employeeProvider.loadEmployees();
+        final allEmployees = _employeeProvider.employees;
+        emit(AllEmployeesState(allEmployees: allEmployees));
         AppNavigator.pushReplace(route: AppRoute.employeeListScreen);
       }
     });

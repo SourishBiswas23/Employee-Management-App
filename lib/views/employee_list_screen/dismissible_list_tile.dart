@@ -1,27 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../app_theme.dart';
+import '../../common/format_date_string.dart';
+import '../../controllers/bloc/employee_bloc/employee_bloc.dart';
+import '../../models/employee.model.dart';
 
-class DismissibleListTile extends StatelessWidget {
+class DismissibleListTile extends StatefulWidget {
   const DismissibleListTile({
-    super.key,
-    required this.employeeKey,
-    required this.name,
-    required this.position,
-    required this.joiningDate,
-    required this.leavingDate,
+    required super.key,
+    required this.employee,
   });
 
-  final int employeeKey;
-  final String name;
-  final String position;
-  final String joiningDate;
-  final String leavingDate;
+  final EmployeeModel employee;
 
+  @override
+  State<DismissibleListTile> createState() => _DismissibleListTileState();
+}
+
+class _DismissibleListTileState extends State<DismissibleListTile> {
+  late final String name;
+  late final String position;
+  late final String joiningDate;
+  late final String leavingDate;
+
+  @override
+  void initState() {
+    name = widget.employee.name;
+    position = widget.employee.position;
+    joiningDate = formatDateString(
+      dateString: widget.employee.dateOfJoining,
+    );
+    leavingDate = formatDateString(
+      dateString: widget.employee.dateOfLeaving,
+    );
+    super.initState();
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Dismissible(
+      onDismissed: (direction) {
+        context
+            .read<EmployeeBloc>()
+            .add(DeleteEmployeeEvent(employee: widget.employee));
+      },
+      key: widget.key!,
       background: Container(
         alignment: Alignment.centerRight,
         padding: const EdgeInsets.symmetric(
@@ -37,7 +62,7 @@ class DismissibleListTile extends StatelessWidget {
         ),
       ),
       direction: DismissDirection.endToStart,
-      key: ValueKey<int>(employeeKey),
+      
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.all(16),
@@ -69,6 +94,9 @@ class DismissibleListTile extends StatelessWidget {
             const SizedBox(height: 6),
             Text(
               '$joiningDate ${leavingDate.isEmpty ? '' : ' - $leavingDate'}',
+              style: AppTheme.bodySmall.copyWith(
+                color: AppTheme.greyDark,
+              ),
             )
           ],
         ),
