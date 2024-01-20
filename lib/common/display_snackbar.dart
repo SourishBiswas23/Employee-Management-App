@@ -8,7 +8,7 @@ import '../routes.dart';
 displaySnackbar({required final String message, required showUndoButton}) {
   AppNavigator.scaffoldMessengerKey.currentState?.showSnackBar(
     SnackBar(
-      backgroundColor: AppTheme.mediumBlack,
+      backgroundColor: AppTheme.lightBlack,
       padding: const EdgeInsets.all(0),
       content: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),

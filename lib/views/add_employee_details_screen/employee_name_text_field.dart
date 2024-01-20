@@ -6,8 +6,10 @@ class EmployeeNameTextField extends StatelessWidget {
   const EmployeeNameTextField({
     super.key,
     required this.employeeNameController,
+    required this.focusScopeNode,
   });
   final TextEditingController employeeNameController;
+  final FocusScopeNode focusScopeNode;
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +22,7 @@ class EmployeeNameTextField extends StatelessWidget {
     );
 
     return TextField(
+      focusNode: focusScopeNode,
       controller: employeeNameController,
       cursorColor: AppTheme.blueDark,
       decoration: InputDecoration(

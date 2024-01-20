@@ -20,6 +20,7 @@ class _AddEmployeeDetailsScreenState extends State<AddEmployeeDetailsScreen> {
   late final TextEditingController selectedRoleController;
   late final TextEditingController startDateController;
   late final TextEditingController endDateController;
+  late final FocusScopeNode focusScopeNode;
 
   @override
   void initState() {
@@ -27,6 +28,7 @@ class _AddEmployeeDetailsScreenState extends State<AddEmployeeDetailsScreen> {
     selectedRoleController = TextEditingController();
     startDateController = TextEditingController();
     endDateController = TextEditingController();
+    focusScopeNode = FocusScopeNode();
 
     employeeNameController.text = '';
     selectedRoleController.text = '';
@@ -42,6 +44,7 @@ class _AddEmployeeDetailsScreenState extends State<AddEmployeeDetailsScreen> {
     selectedRoleController.dispose();
     startDateController.dispose();
     endDateController.dispose();
+    focusScopeNode.dispose();
     super.dispose();
   }
   
@@ -67,15 +70,18 @@ class _AddEmployeeDetailsScreenState extends State<AddEmployeeDetailsScreen> {
           children: [
             EmployeeNameTextField(
               employeeNameController: employeeNameController,
+              focusScopeNode: focusScopeNode,
             ),
             const SizedBox(height: 23),
             SelectRoleButton(
               selectedRoleController: selectedRoleController,
+              focusScopeNode: focusScopeNode,
             ),
             const SizedBox(height: 23),
             StartAndEndDate(
               endDateController: endDateController,
               startDateController: startDateController,
+              focusScopeNode: focusScopeNode,
             ),
             const Spacer(),
             const Divider(color: AppTheme.greyLight),

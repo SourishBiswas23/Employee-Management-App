@@ -9,18 +9,30 @@ class StartAndEndDate extends StatefulWidget {
     super.key,
     required this.startDateController,
     required this.endDateController,
+    required this.focusScopeNode,
   });
   final TextEditingController startDateController;
   final TextEditingController endDateController;
+  final FocusScopeNode focusScopeNode;
 
   @override
   State<StartAndEndDate> createState() => _StartAndEndDateState();
 }
 
 class _StartAndEndDateState extends State<StartAndEndDate> {
-  final DateTime todaysDate = DateTime.now();
-  DateTime startDate = DateTime.now();
-  DateTime? endDate;
+
+  @override
+  void initState() {
+    final dateNow = DateTime.now();
+    todaysDate = DateTime(dateNow.year, dateNow.month, dateNow.day);
+    widget.startDateController.text = todaysDate.toString();
+    joiningDate = todaysDate;
+    super.initState();
+  }
+
+  late final DateTime todaysDate;
+  late DateTime joiningDate;
+  DateTime? leavingDate;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +42,7 @@ class _StartAndEndDateState extends State<StartAndEndDate> {
         Expanded(
           child: GestureDetector(
             onTap: () async {
+              widget.focusScopeNode.unfocus();
               final date = await showDatePicker(
                 context: context,
                 firstDate: DateTime(2020),
@@ -37,7 +50,7 @@ class _StartAndEndDateState extends State<StartAndEndDate> {
               );
               if (date != null) {
                 setState(() {
-                  startDate = date;
+                  joiningDate = date;
                   widget.startDateController.text = date.toString();
                 });
               }
@@ -67,9 +80,9 @@ class _StartAndEndDateState extends State<StartAndEndDate> {
                     width: 12,
                   ),
                   Text(
-                    startDate == todaysDate
+                    joiningDate == todaysDate
                         ? 'Today'
-                        : DateFormat('d MMM y').format(startDate),
+                        : DateFormat('d MMM y').format(joiningDate),
                     style: AppTheme.bodyMedium,
                   )
                 ],
@@ -90,6 +103,7 @@ class _StartAndEndDateState extends State<StartAndEndDate> {
         Expanded(
           child: GestureDetector(
             onTap: () async {
+              widget.focusScopeNode.unfocus();
               final date = await showDatePicker(
                 context: context,
                 firstDate: DateTime(2020),
@@ -97,7 +111,7 @@ class _StartAndEndDateState extends State<StartAndEndDate> {
               );
               if (date != null) {
                 setState(() {
-                  endDate = date;
+                  leavingDate = date;
                   widget.endDateController.text = date.toString();
                 });
               }
@@ -127,11 +141,11 @@ class _StartAndEndDateState extends State<StartAndEndDate> {
                     width: 12,
                   ),
                   Text(
-                    endDate == null
+                    leavingDate == null
                         ? 'No date'
-                        : DateFormat('d MMM y').format(endDate!),
+                        : DateFormat('d MMM y').format(leavingDate!),
                     style: AppTheme.bodyMedium.copyWith(
-                      color: endDate == null ? AppTheme.greyDark : null,
+                      color: leavingDate == null ? AppTheme.greyDark : null,
                     ),
                   )
                 ],

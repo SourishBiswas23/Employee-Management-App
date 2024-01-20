@@ -1,3 +1,4 @@
+import 'package:employee_management_app/views/employee_list_screen/employee_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       create: (context) => EmployeeBloc(),
       child: MaterialApp(
         title: 'Employee Manager',
-        home: const AddEmployeeDetailsScreen(),
+        home: const EmployeeListScreen(),
         onGenerateRoute: AppNavigator.onGenerateRoute,
         scaffoldMessengerKey: AppNavigator.scaffoldMessengerKey,
         navigatorKey: AppNavigator.navigatorKey,

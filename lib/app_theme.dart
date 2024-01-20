@@ -8,7 +8,7 @@ class AppTheme {
   static const greyMedium = Color(0xFFE5E5E5);
   static const greyDark = Color(0xFF949C9E);
   static const lightBlack = Color(0xFF323238);
-  static const mediumBlack = Color(0xFF323238);
+  static const red = Color(0xFFF34642);
 
   static const headingLarge = TextStyle(
     fontFamily: 'Roboto',

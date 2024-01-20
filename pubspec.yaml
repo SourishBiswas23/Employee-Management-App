@@ -72,6 +72,7 @@ flutter:
   assets:
     - assets/images/no_employee_records.png
     - assets/images/event.svg
+    - assets/images/delete_icon.svg
     - assets/images/arrow_right.svg
   #   - images/a_dot_ham.jpeg
 

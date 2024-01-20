@@ -6,8 +6,10 @@ class SelectRoleButton extends StatefulWidget {
   const SelectRoleButton({
     super.key,
     required this.selectedRoleController,
+    required this.focusScopeNode,
   });
   final TextEditingController selectedRoleController;
+  final FocusScopeNode focusScopeNode;
 
   @override
   State<SelectRoleButton> createState() => _SelectRoleButtonState();
@@ -28,6 +30,7 @@ class _SelectRoleButtonState extends State<SelectRoleButton> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        widget.focusScopeNode.unfocus();
         showModalBottomSheet(
           backgroundColor: Colors.white,
           context: context,

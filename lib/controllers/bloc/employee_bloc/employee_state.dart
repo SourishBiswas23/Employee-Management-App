@@ -15,7 +15,4 @@ final class AllEmployeesState extends EmployeeState {
 
   @override
   final List<EmployeeModel> allEmployees;
-
-  @override
-  List<Object> get props => [allEmployees];
 }

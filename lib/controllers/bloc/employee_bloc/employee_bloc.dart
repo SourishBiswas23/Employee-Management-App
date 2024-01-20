@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:employee_management_app/routes.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
@@ -42,22 +43,28 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
     );
     on<CreateEmployeeEvent>((event, emit) async {
       bool error = false;
-      if (event.employee.name == '') {
+      if (event.employee.name.isEmpty) {
         displaySnackbar(
           message: 'Employee Name Cannot Be Empty',
           showUndoButton: false,
         );
         error = true;
-      } else if (event.employee.position == '') {
+      } else if (event.employee.position.isEmpty) {
         displaySnackbar(
           message: 'Please select position of the employee',
+          showUndoButton: false,
+        );
+        error = true;
+      } else if (event.employee.dateOfJoining.isEmpty) {
+        displaySnackbar(
+          message: 'Please select joining date',
           showUndoButton: false,
         );
         error = true;
       }
       if (!error) {
         _employeeProvider.saveEmployee(employee: event.employee);
-        displaySnackbar(message: 'Employee Saved', showUndoButton: false);
+        AppNavigator.pushReplace(route: AppRoute.employeeListScreen);
       }
     });
   }

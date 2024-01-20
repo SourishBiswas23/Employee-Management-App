@@ -1,3 +1,4 @@
+import 'package:employee_management_app/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -38,11 +39,16 @@ class CancelAndSaveButtons extends StatelessWidget {
               color: AppTheme.blueLight,
               borderRadius: BorderRadius.circular(6),
             ),
-            child: Text(
-              'Cancel',
-              style: AppTheme.bodyMedium.copyWith(
-                fontWeight: FontWeight.w500,
-                color: AppTheme.blueDark,
+            child: GestureDetector(
+              onTap: () {
+                AppNavigator.pushReplace(route: AppRoute.employeeListScreen);
+              },
+              child: Text(
+                'Cancel',
+                style: AppTheme.bodyMedium.copyWith(
+                  fontWeight: FontWeight.w500,
+                  color: AppTheme.blueDark,
+                ),
               ),
             ),
           ),
