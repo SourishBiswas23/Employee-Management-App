@@ -1,3 +1,4 @@
+import 'package:employee_management_app/models/employee.model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -28,6 +29,14 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<EmployeeBloc, EmployeeState>(
       builder: (context, state) {
+
+        List<EmployeeModel> currentEmployees = state.allEmployees
+            .where((employee) => employee.dateOfLeaving.isEmpty)
+            .toList();
+        List<EmployeeModel> previousEmployees = state.allEmployees
+            .where((employee) => employee.dateOfLeaving.isNotEmpty)
+            .toList();
+        
         return Scaffold(
           backgroundColor: AppTheme.greyLight,
           appBar: AppBar(
@@ -45,18 +54,51 @@ class _EmployeeListScreenState extends State<EmployeeListScreen> {
                     width: 260,
                   ),
                 )
-              : ListView.builder(
-                  itemCount: state.allEmployees.length,
-                  itemBuilder: (context, index) {
-                    return DismissibleListTile(
-                      key: ValueKey<String>(
-                        generateKey(
-                          employee: state.allEmployees[index],
+              : SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(16),
+                        color: AppTheme.greyLight,
+                        child: Text(
+                          'Current Employees',
+                          style: AppTheme.headingMedium.copyWith(
+                            color: AppTheme.blueDark,
+                          ),
                         ),
                       ),
-                      employee: state.allEmployees[index],
-                    );
-                  },
+                      ...List.generate(
+                        currentEmployees.length,
+                        (index) => DismissibleListTile(
+                          key: ValueKey<String>(
+                            generateKey(employee: currentEmployees[index]),
+                          ),
+                          employee: currentEmployees[index],
+                        ),
+                      ),
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(16),
+                        color: AppTheme.greyLight,
+                        child: Text(
+                          'Previous Employees',
+                          style: AppTheme.headingMedium.copyWith(
+                            color: AppTheme.blueDark,
+                          ),
+                        ),
+                      ),
+                      ...List.generate(
+                        previousEmployees.length,
+                        (index) => DismissibleListTile(
+                          key: ValueKey<String>(
+                            generateKey(employee: previousEmployees[index]),
+                          ),
+                          employee: previousEmployees[index],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
           floatingActionButton: GestureDetector(
             onTap: () => AppNavigator.pushReplace(
