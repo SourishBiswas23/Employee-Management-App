@@ -6,6 +6,7 @@ import '../../app_theme.dart';
 import '../../common/format_date_string.dart';
 import '../../controllers/bloc/employee_bloc/employee_bloc.dart';
 import '../../models/employee.model.dart';
+import '../../routes.dart';
 
 class DismissibleListTile extends StatefulWidget {
   const DismissibleListTile({
@@ -63,42 +64,50 @@ class _DismissibleListTileState extends State<DismissibleListTile> {
       ),
       direction: DismissDirection.endToStart,
       
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(16),
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          border: Border(
-            bottom: BorderSide(
-              width: 1,
-              color: AppTheme.greyLight,
+      child: GestureDetector(
+        onTap: () {
+          AppNavigator.pushReplace(
+            route: AppRoute.editEmployeeDetailsScreen,
+            arguments: {'employee': widget.employee},
+          );
+        },
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(16),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            border: Border(
+              bottom: BorderSide(
+                width: 1,
+                color: AppTheme.greyLight,
+              ),
             ),
           ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              name,
-              style: AppTheme.headingMedium.copyWith(
-                color: AppTheme.lightBlack,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                name,
+                style: AppTheme.headingMedium.copyWith(
+                  color: AppTheme.lightBlack,
+                ),
               ),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              position,
-              style: AppTheme.bodyMedium.copyWith(
-                color: AppTheme.greyDark,
+              const SizedBox(height: 6),
+              Text(
+                position,
+                style: AppTheme.bodyMedium.copyWith(
+                  color: AppTheme.greyDark,
+                ),
               ),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              '$joiningDate ${leavingDate.isEmpty ? '' : ' - $leavingDate'}',
-              style: AppTheme.bodySmall.copyWith(
-                color: AppTheme.greyDark,
-              ),
-            )
-          ],
+              const SizedBox(height: 6),
+              Text(
+                '$joiningDate ${leavingDate.isEmpty ? '' : ' - $leavingDate'}',
+                style: AppTheme.bodySmall.copyWith(
+                  color: AppTheme.greyDark,
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

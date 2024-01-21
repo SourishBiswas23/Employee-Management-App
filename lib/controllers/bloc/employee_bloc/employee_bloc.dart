@@ -42,13 +42,40 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
     });
     on<UpdateEmployeeEvent>(
       (event, emit) async {
-        _employeeProvider.updateEmployee(
-          oldEmployee: event.oldEmployee,
-          updatedEmployee: event.updatedEmployee,
-        );
-        await _employeeProvider.loadEmployees();
-        final allEmployees = _employeeProvider.employees;
-        emit(AllEmployeesState(allEmployees: allEmployees));
+        bool error = false;
+        if (event.updatedEmployee.name.isEmpty) {
+          AppNavigator.scaffoldMessengerKey.currentState?.hideCurrentSnackBar();
+          displaySnackbar(
+            message: 'Employee Name Cannot Be Empty',
+            showUndoButton: false,
+          );
+          error = true;
+        } else if (event.updatedEmployee.position.isEmpty) {
+          AppNavigator.scaffoldMessengerKey.currentState?.hideCurrentSnackBar();
+          displaySnackbar(
+            message: 'Please select position of the employee',
+            showUndoButton: false,
+          );
+          error = true;
+        } else if (event.updatedEmployee.dateOfJoining.isEmpty) {
+          AppNavigator.scaffoldMessengerKey.currentState?.hideCurrentSnackBar();
+          displaySnackbar(
+            message: 'Please select joining date',
+            showUndoButton: false,
+          );
+          error = true;
+        }
+        if (!error) {
+          await _employeeProvider.updateEmployee(
+            oldEmployee: event.oldEmployee,
+            updatedEmployee: event.updatedEmployee,
+          );
+          await _employeeProvider.loadEmployees();
+          final allEmployees = _employeeProvider.employees;
+          emit(AllEmployeesState(allEmployees: allEmployees));
+          AppNavigator.pushReplace(route: AppRoute.employeeListScreen);
+        }
+        
       },
     );
     on<CreateEmployeeEvent>((event, emit) async {

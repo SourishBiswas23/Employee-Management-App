@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'views/add_employee_details_screen/add_employee_details_screen.dart';
-import 'views/edit_employee_list_screen/edit_employee_list_screen.dart';
+import 'views/edit_employee_details_screen/edit_employee_details_screen.dart';
 import 'views/employee_list_screen/employee_list_screen.dart';
 import 'views/not_found_screen/not_found_screen.dart';
 
@@ -9,20 +9,20 @@ enum AppRoute {
   notFoundScreen,
   addEmployeeDetailsScreen,
   employeeListScreen,
-  editEmployeeListScreen,
+  editEmployeeDetailsScreen,
 }
 
 class _Paths {
   static const String notFoundScreen = '/notFoundScreen';
   static const String addEmployeeDetailsScreen = '/addEmployeeDetailsScreen';
   static const String employeeListScreen = '/employeeListScreen';
-  static const String editEmployeeListScreen = '/editEmployeeListScreen';
+  static const String editEmployeeDetailsScreen = '/editEmployeeDetailsScreen';
 
   static const Map<AppRoute, String> _pathMap = {
     AppRoute.notFoundScreen: _Paths.notFoundScreen,
     AppRoute.addEmployeeDetailsScreen: _Paths.addEmployeeDetailsScreen,
     AppRoute.employeeListScreen: _Paths.employeeListScreen,
-    AppRoute.editEmployeeListScreen: _Paths.editEmployeeListScreen,
+    AppRoute.editEmployeeDetailsScreen: _Paths.editEmployeeDetailsScreen,
   };
 
   static String of(AppRoute appRoute) => _pathMap[appRoute] ?? notFoundScreen;
@@ -46,9 +46,11 @@ class AppNavigator {
         return MaterialPageRoute(
           builder: (context) => const EmployeeListScreen(),
         );
-      case _Paths.editEmployeeListScreen:
+      case _Paths.editEmployeeDetailsScreen:
         return MaterialPageRoute(
-          builder: (context) => const EditEmployeeListScreen(),
+          builder: (context) => EditEmployeeDetailsScreen(
+            employee: (settings.arguments as Map<String, dynamic>)['employee'],
+          ),
         );
       default:
         return MaterialPageRoute(
@@ -63,8 +65,12 @@ class AppNavigator {
 
   static Future? pushReplace({
     required AppRoute route,
+    Map<String, dynamic>? arguments,
   }) {
-    return navigatorKey.currentState?.pushReplacementNamed(_Paths.of(route));
+    return navigatorKey.currentState?.pushReplacementNamed(
+      _Paths.of(route),
+      arguments: arguments,
+    );
   }
 
   static void pop() {
