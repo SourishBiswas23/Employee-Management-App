@@ -11,6 +11,7 @@ class EmployeeNameTextField extends StatelessWidget {
   final TextEditingController employeeNameController;
   final FocusScopeNode focusScopeNode;
 
+
   @override
   Widget build(BuildContext context) {
     final textFieldBorderStyle = OutlineInputBorder(
@@ -22,6 +23,7 @@ class EmployeeNameTextField extends StatelessWidget {
     );
 
     return TextField(
+      autofocus: true,
       focusNode: focusScopeNode,
       controller: employeeNameController,
       cursorColor: AppTheme.blueDark,
