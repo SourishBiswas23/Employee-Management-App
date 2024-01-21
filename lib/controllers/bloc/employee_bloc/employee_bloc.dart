@@ -19,6 +19,7 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
     });
     on<DeleteEmployeeEvent>(
       (event, emit) async {
+        AppNavigator.scaffoldMessengerKey.currentState?.hideCurrentSnackBar();
         await _employeeProvider.deleteEmployee(employee: event.employee);
         displaySnackbar(
           message: 'Employee data has been deleted',
@@ -53,18 +54,21 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
     on<CreateEmployeeEvent>((event, emit) async {
       bool error = false;
       if (event.employee.name.isEmpty) {
+        AppNavigator.scaffoldMessengerKey.currentState?.hideCurrentSnackBar();
         displaySnackbar(
           message: 'Employee Name Cannot Be Empty',
           showUndoButton: false,
         );
         error = true;
       } else if (event.employee.position.isEmpty) {
+        AppNavigator.scaffoldMessengerKey.currentState?.hideCurrentSnackBar();
         displaySnackbar(
           message: 'Please select position of the employee',
           showUndoButton: false,
         );
         error = true;
       } else if (event.employee.dateOfJoining.isEmpty) {
+        AppNavigator.scaffoldMessengerKey.currentState?.hideCurrentSnackBar();
         displaySnackbar(
           message: 'Please select joining date',
           showUndoButton: false,
