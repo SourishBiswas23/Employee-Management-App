@@ -63,7 +63,7 @@ class _EditEmployeeStartAndEndDateState
                 context: context,
                 selectedDate: joiningDate,
                 calendarController: calendarController,
-                isEditing: true,
+                isJoiningDate: true,
               );
 
               if (date != null) {
@@ -126,7 +126,7 @@ class _EditEmployeeStartAndEndDateState
                 context: context,
                 selectedDate: leavingDate,
                 calendarController: calendarController,
-                isEditing: false,
+                isJoiningDate: false,
               );
               setState(() {
                 leavingDate = date;

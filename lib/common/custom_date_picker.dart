@@ -9,7 +9,7 @@ Future<DateTime?> customDatePicker({
   required BuildContext context,
   required DateTime? selectedDate,
   required CalendarController calendarController,
-  required bool isEditing,
+  required bool isJoiningDate,
 }) {
   late List<List<Map<String, dynamic>>> entries;
   final DateTime todaysDate = DateTime(
@@ -25,7 +25,7 @@ Future<DateTime?> customDatePicker({
       selectedDate.day,
     );
   }
-  if (isEditing) {
+  if (isJoiningDate) {
     entries = [
       [
         {
@@ -128,6 +128,7 @@ Future<DateTime?> customDatePicker({
           child: StatefulBuilder(
             builder: (context, setState) {
               return Column(
+                mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   const SizedBox(width: double.infinity),

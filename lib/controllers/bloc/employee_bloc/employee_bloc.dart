@@ -1,10 +1,10 @@
 import 'package:bloc/bloc.dart';
-import 'package:employee_management_app/routes.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 import '../../../common/display_snackbar.dart';
 import '../../../models/employee.model.dart';
+import '../../../routes.dart';
 import '../../providers/employee_provider.dart';
 
 part 'employee_event.dart';
@@ -43,6 +43,10 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
     on<UpdateEmployeeEvent>(
       (event, emit) async {
         bool error = false;
+        String? errorMessage = isDateValid(
+          dateOfJoining: event.updatedEmployee.dateOfJoining,
+          dateOfLeaving: event.updatedEmployee.dateOfLeaving,
+        );
         if (event.updatedEmployee.name.isEmpty) {
           AppNavigator.scaffoldMessengerKey.currentState?.hideCurrentSnackBar();
           displaySnackbar(
@@ -65,6 +69,10 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
           );
           error = true;
         }
+        else if (errorMessage != null) {
+          error = true;
+          displaySnackbar(message: errorMessage, showUndoButton: false);
+        }
         if (!error) {
           await _employeeProvider.updateEmployee(
             oldEmployee: event.oldEmployee,
@@ -80,6 +88,10 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
     );
     on<CreateEmployeeEvent>((event, emit) async {
       bool error = false;
+      String? errorMessage = isDateValid(
+        dateOfJoining: event.employee.dateOfJoining,
+        dateOfLeaving: event.employee.dateOfLeaving,
+      );
       if (event.employee.name.isEmpty) {
         AppNavigator.scaffoldMessengerKey.currentState?.hideCurrentSnackBar();
         displaySnackbar(
@@ -102,6 +114,10 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
         );
         error = true;
       }
+      else if (errorMessage != null) {
+        error = true;
+        displaySnackbar(message: errorMessage, showUndoButton: false);
+      }
       if (!error) {
         await _employeeProvider.saveEmployee(employee: event.employee);
         await _employeeProvider.loadEmployees();
@@ -113,4 +129,22 @@ class EmployeeBloc extends Bloc<EmployeeEvent, EmployeeState> {
   }
   final EmployeeProvider _employeeProvider = EmployeeProvider();
   EmployeeModel? deletedEmployee;
+}
+
+String? isDateValid({
+  required String dateOfJoining,
+  required String? dateOfLeaving,
+}) {
+  DateTime startDate = DateTime.parse(dateOfJoining);
+  DateTime? endDate = DateTime.tryParse(dateOfLeaving ?? '');
+  DateTime _ = DateTime.now().toLocal();
+  DateTime todaysDate = DateTime(_.year, _.month, _.day);
+  if (endDate != null) {
+    if (startDate.isAfter(endDate)) {
+      return 'Joining date cannot be after Leaving date';
+    } else if (todaysDate.isBefore(endDate)) {
+      return 'Leaving date cannot be in the future';
+    }
+  }
+  return null;
 }

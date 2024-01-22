@@ -58,7 +58,7 @@ class _StartAndEndDateState extends State<StartAndEndDate> {
                 context: context,
                 selectedDate: joiningDate,
                 calendarController: calendarController,
-                isEditing: true,
+                isJoiningDate: true,
               );
               if (date != null) {
                 setState(() {
@@ -120,7 +120,7 @@ class _StartAndEndDateState extends State<StartAndEndDate> {
                 context: context,
                 selectedDate: leavingDate,
                 calendarController: calendarController,
-                isEditing: false,
+                isJoiningDate: false,
               );
               setState(() {
                 leavingDate = date;
