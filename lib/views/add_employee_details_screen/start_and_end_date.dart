@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
+import 'package:table_calendar_null_safe/table_calendar_null_safe.dart';
 
 import '../../app_theme.dart';
+import '../../common/custom_date_picker.dart';
 
 class StartAndEndDate extends StatefulWidget {
   const StartAndEndDate({
@@ -21,13 +23,22 @@ class StartAndEndDate extends StatefulWidget {
 
 class _StartAndEndDateState extends State<StartAndEndDate> {
 
+  late final CalendarController calendarController;
+
   @override
   void initState() {
     final dateNow = DateTime.now();
     todaysDate = DateTime(dateNow.year, dateNow.month, dateNow.day);
     widget.startDateController.text = todaysDate.toString();
     joiningDate = todaysDate;
+    calendarController = CalendarController();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    calendarController.dispose();
+    super.dispose();
   }
 
   late final DateTime todaysDate;
@@ -43,10 +54,11 @@ class _StartAndEndDateState extends State<StartAndEndDate> {
           child: GestureDetector(
             onTap: () async {
               widget.focusScopeNode.unfocus();
-              final date = await showDatePicker(
+              final date = await customDatePicker(
                 context: context,
-                firstDate: DateTime(2020),
-                lastDate: DateTime(2030),
+                selectedDate: joiningDate,
+                calendarController: calendarController,
+                isEditing: true,
               );
               if (date != null) {
                 setState(() {
@@ -104,17 +116,17 @@ class _StartAndEndDateState extends State<StartAndEndDate> {
           child: GestureDetector(
             onTap: () async {
               widget.focusScopeNode.unfocus();
-              final date = await showDatePicker(
+              final date = await customDatePicker(
                 context: context,
-                firstDate: DateTime(2020),
-                lastDate: DateTime(2030),
+                selectedDate: leavingDate,
+                calendarController: calendarController,
+                isEditing: false,
               );
-              if (date != null) {
-                setState(() {
-                  leavingDate = date;
-                  widget.endDateController.text = date.toString();
-                });
-              }
+              setState(() {
+                leavingDate = date;
+                widget.endDateController.text =
+                    date != null ? date.toString() : '';
+              });
             },
             child: Container(
               padding: const EdgeInsets.only(

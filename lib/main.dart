@@ -1,3 +1,4 @@
+import 'package:employee_management_app/app_theme.dart';
 import 'package:employee_management_app/views/employee_list_screen/employee_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         onGenerateRoute: AppNavigator.onGenerateRoute,
         scaffoldMessengerKey: AppNavigator.scaffoldMessengerKey,
         navigatorKey: AppNavigator.navigatorKey,
+        theme: ThemeData(primaryColor: AppTheme.blueDark),
       ),
     );
   }
