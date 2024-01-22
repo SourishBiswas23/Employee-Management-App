@@ -22,7 +22,6 @@ class EditEmployeeNameTextField extends StatelessWidget {
     );
 
     return TextField(
-      autofocus: true,
       focusNode: focusScopeNode,
       controller: employeeNameController,
       cursorColor: AppTheme.blueDark,

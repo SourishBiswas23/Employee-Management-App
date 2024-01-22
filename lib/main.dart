@@ -1,11 +1,11 @@
 import 'package:employee_management_app/app_theme.dart';
-import 'package:employee_management_app/views/employee_list_screen/employee_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'controllers/bloc/employee_bloc/employee_bloc.dart';
 import 'routes.dart';
 import 'controllers/repository/database_service.dart';
+import 'views/employee_list_screen/employee_list_screen.dart';
 
 void main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +26,9 @@ class MyApp extends StatelessWidget {
         onGenerateRoute: AppNavigator.onGenerateRoute,
         scaffoldMessengerKey: AppNavigator.scaffoldMessengerKey,
         navigatorKey: AppNavigator.navigatorKey,
-        theme: ThemeData(primaryColor: AppTheme.blueDark),
+        theme: ThemeData.light().copyWith(
+          colorScheme: ColorScheme.fromSeed(seedColor: AppTheme.blueDark),
+        ),
       ),
     );
   }
